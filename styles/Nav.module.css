@@ -1,0 +1,25 @@
+.container {
+    width: 100%;
+    height:100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subContainer {
+    width: 60%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.logo{
+    width:48px;
+    height: 48px;
+    border-radius: 100%;
+    background-color: #0070f3;
+}
+
+.subContainer > * {
+    margin-left: 16px;
+    margin-right: 16px;
+}
