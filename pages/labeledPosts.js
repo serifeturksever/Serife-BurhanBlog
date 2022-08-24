@@ -31,6 +31,18 @@ function LabeledPosts() {
                 frontMatter.label.includes(data.label));
     }
 
+    const { colorMode } = useColorMode()
+
+    const backgroundColor = {
+        light: "blackAlpha.200",
+        dark: "whiteAlpha.200"
+    }
+
+    const noPostBackground = {
+        light:"#FDF6C1" ,
+        dark: "#E3B04B"
+    }
+
     return (
         <Container>
             <Flex
@@ -41,33 +53,43 @@ function LabeledPosts() {
                 <Heading size="md" as="h3" mb={1} fontWeight="medium">
                     {data.label}
                 </Heading>
-                {(filteredBlogPosts) ? <p>{_data.length} articles</p> : <p>0 article</p> }
+                {(filteredBlogPosts) ? <p>{_data.length} articles</p> : <p>Here is no article</p> }
             </Flex>
 
             {filteredBlogPosts ? 
             <Grid
-            width="75%"
+            width={{base: "90%",sm: "fit-content",md: "fit-content"}}
             textAlign="center"
-            gridTemplateColumns="auto auto"
+            gridTemplateColumns={{base: "auto",sm: "auto auto", md: "auto auto" }}
             mt={8}
             mb={16}
             gap={10}
         >
             {filteredBlogPosts.map(p => (
-                <NextLink href="/" passHref scroll={false}>
+                <NextLink href={`/blog/${p.slug}`} passHref scroll={false}>
                     <GridItem
                         backgroundColor="whiteAlpha.200"
-                        textAlign="center"
-                        p={1}
-                        color="blackAlpha.700"
+                        textAlign="left"
+                        p={8}
                         borderRadius="16px"
-                        width="100%"
-                        height="400px"
+                        width={{base: "100%",sm: "300px",md: "500px"}}
+                        height="300px"
                         cursor="pointer"
-                        background={"blackAlpha.200"}
-                        boxShadow={"10px 10px 25px #F0EDEB"}
+                        background={backgroundColor[colorMode]}
+                        boxShadow={colorMode == "light" ? "10px 10px 25px #F0EDEB" : undefined}
+                        display="flex"
+                        flexDirection={"column"}
+                        justifyContent="space-between"
                     >
-                        sadasd
+                        <Heading>
+                            {p.title}
+                        </Heading>
+                        <article style={{marginTop: 16, marginBottom: 16}}>
+                            {p.summary}
+                        </article>
+                        <NextLink href={`/blog/${p.slug}`}>
+                            Devamını Oku &rarr;
+                        </NextLink>
                     </GridItem>
                 </NextLink>
             ))}
@@ -75,7 +97,7 @@ function LabeledPosts() {
         :
         <Box
         mt={32}
-        background="#FDF6E3"
+        background={noPostBackground[colorMode]}
         px={12}
         py={4}
         borderRadius={12}

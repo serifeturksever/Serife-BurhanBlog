@@ -24,7 +24,7 @@ export default function Index() {
 
   const boxBackground = {
     light: 'blackAlpha.200',
-    dark: 'blackAlpha.700'
+    dark: 'whiteAlpha.200'
   }
 
   const chooseDeveloper = (developerName) => {
