@@ -1,9 +1,16 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import { HamburgerIcon } from '@chakra-ui/icons'
 import {
     useColorMode,
     Button,
     Flex,
-    Box
+    Box,
+    Menu,
+  MenuItem,
+  MenuList,
+  MenuButton,
+  IconButton,
+  Link
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import styled from '@emotion/styled'
@@ -49,13 +56,15 @@ const Container = ({ children }) => {
         transition: height .5s, line-height .5s;
         width: 100%;
         border-bottom:1px solid lightGray;
+        padding: 8px
         `
 
     return (
         <>
             <StickyNavContainer>
             <StickyNav
-                flexDirection="row"
+                flexDirection={{base: "column", md: "row"}}
+                display={{base: "none",md: "flex"}}
                 justifyContent="space-between"
                 alignItems="center"
                 maxWidth="800px"
@@ -64,7 +73,9 @@ const Container = ({ children }) => {
                 as="nav"
                 mx="auto"
             >
-                <Box>
+                <Box
+                width={"80%"}
+                >
                 <NextLink href="/" passHref>
                 <Box
                     width='fit-content'
@@ -89,9 +100,45 @@ const Container = ({ children }) => {
                         </Button>
                     </NextLink>
                 </Box>
-                <DarkModeSwitch />
+                <Box
+                mt={4}
+                mb={4}
+                display={"flex"}
+                width={"20%"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                >
+                    <DarkModeSwitch/>
+                </Box>
             </StickyNav >
+
+            {/* Mobile Nav */}
+            <Box flex={1} align="right" display={{ base: 'inline-block', md: 'none' }}>
+          <DarkModeSwitch />
+
+          <Box ml={2} display={{ base: 'inline-block', md: 'none' }}>
+            <Menu isLazy id="navbar-menu">
+              <MenuButton
+                as={IconButton}
+                icon={<HamburgerIcon />}
+                variant="outline"
+                aria-label="Options"
+              />
+              <MenuList>
+                <NextLink href="/" passHref>
+                  <MenuItem as={Link}>Home</MenuItem>
+                </NextLink>
+                <NextLink href="/blog" passHref>
+                  <MenuItem as={Link}>Blog</MenuItem>
+                </NextLink>
+              </MenuList>
+            </Menu>
+          </Box>
+        </Box>
+
             </StickyNavContainer>
+
+
             <Flex
                 as="main"
                 justifyContent="center"
@@ -103,7 +150,6 @@ const Container = ({ children }) => {
                 alignItems="center"
             >
                 {children}
-                {/* <Footer /> */}
             </Flex>
         </>
     )
