@@ -113,9 +113,20 @@ const Container = ({ children }) => {
             </StickyNav >
 
             {/* Mobile Nav */}
+            <Box
+                    width='fit-content'
+                    background={logoBackground[colorMode]}
+                    borderRadius={4}
+                    ml={4}
+                    as="a"
+                    variant="ghost"
+                    p={[2, 3, 4]}    
+                    fontWeight = {600}
+                    textColor={logoText[colorMode]}
+                    display={{ base: 'inline-block', md: 'none' }}
+                >S&B</Box>
             <Box flex={1} align="right" display={{ base: 'inline-block', md: 'none' }}>
           <DarkModeSwitch />
-
           <Box ml={2} display={{ base: 'inline-block', md: 'none' }}>
             <Menu isLazy id="navbar-menu">
               <MenuButton
