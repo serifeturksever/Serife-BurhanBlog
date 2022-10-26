@@ -23,15 +23,24 @@ const Container = ({ children }) => {
         dark: 'white'
     }
 
+    const logoText = {
+        light: 'white',
+        dark: 'black'
+    }
+
     const navHoverBg = {
         light: 'gray.600',
         dark: 'gray.300',
     }
 
+    const logoBackground = {
+        light:"#7F5BD5",
+        dark: "#FCD28D"
+    }
+
     const StickyNav = styled(Flex)`
         
         `
-
         const StickyNavContainer = styled(Flex)`
         position: sticky;
         z-index: 10;
@@ -56,14 +65,22 @@ const Container = ({ children }) => {
                 mx="auto"
             >
                 <Box>
+                <NextLink href="/" passHref>
+                <Box
+                    width='fit-content'
+                    background={logoBackground[colorMode]}
+                    borderRadius={4}
+                    as="a"
+                    variant="ghost"
+                    m={4}
+                    p={[1, 2, 4]}    
+                    fontWeight = {600}
+                    textColor={logoText[colorMode]}
+                >S&B</Box>
+                </NextLink>
                     <NextLink href="/" passHref>
                         <Button as="a" variant="ghost" m={4} p={[1, 2, 4]} _hover={{color:"#ffffff" , backgroundColor: navHoverBg[colorMode] }}>
                             Home
-                        </Button>
-                    </NextLink>
-                    <NextLink href="/blog" passHref>
-                        <Button as="a" variant="ghost" m={4} p={[1, 2, 4]} _hover={{color:"#ffffff", backgroundColor: navHoverBg[colorMode] }}>
-                            Blog
                         </Button>
                     </NextLink>
                     <NextLink href="/about" passHref>
