@@ -13,10 +13,13 @@ import {
     Heading,
     Text,
     Flex,
+    Fade,
+    Box,
     Stack,
     Avatar,
     Spinner,
-    Button
+    Button,
+    ScaleFade
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
@@ -36,8 +39,14 @@ export default function BlogLayout({ children, frontMatter }, posts) {
         dark: "#ffffff"
     }
 
+    const popupText = {
+        light: "#ffffff",
+        dark: "#000000"
+    }
+
     const [pagePath, setPagePath] = useState("");
     const [likeCount, setLikeCount] = useState(0);
+    const [isLiked, setLiked] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const router = useRouter();
 
@@ -53,6 +62,8 @@ export default function BlogLayout({ children, frontMatter }, posts) {
     }, [])
 
     const likePost = async () => {
+        setLiked(true);
+        setTimeout(()=>{ setLiked(false) },4000)
         setLikeCount(likeCount + 1);
         console.log("likeCount: ", likeCount)
         let _obj = { // likeCount artması arkadan geldiği için obje içinde tekrar arttırıyorum
@@ -97,6 +108,23 @@ export default function BlogLayout({ children, frontMatter }, posts) {
                 >
                     <Heading letterSpacing="tight" mb={2} as="h1" size="2xl">
                         {frontMatter.title}
+                    </Heading>
+                    <Heading position={"fixed"} right={8} top={"20%"} letterSpacing="tight" mb={2} as="h3" size="xl">
+                    {isLiked ? 
+                    <ScaleFade in={isLiked} initialScale={0.7}>
+                        <Box
+                        bgGradient={[
+                            'linear(to-tr, teal.300, yellow.400)',
+                            'linear(to-t, blue.200, teal.500)',
+                            'linear(to-b, orange.100, purple.300)',
+                          ]}
+                        px={8}
+                        py={2}
+                        borderRadius={8}
+                        textColor = '#000000' // {popupText[colorMode]}
+                    >Thanks for like 😄</Box> 
+                    </ScaleFade>
+                    : null}
                     </Heading>
                     <Heading position={"fixed"} right={10} top={"50%"} letterSpacing="tight" mb={2} as="h3" size="xl">
                         {isLoading ? (<p><Spinner /></p>) :
