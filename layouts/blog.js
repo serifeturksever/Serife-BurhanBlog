@@ -52,7 +52,7 @@ export default function BlogLayout({ children, frontMatter }, posts) {
 
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:3000/api/mongodb/get')
+        fetch('http://localhost:3000/api/mongodb/allPosts')
             .then((res) => res.json())
             .then((data) => {
                 const mongoLikeCount = (data.filter(d => d.slug === frontMatter.slug))[0].likeCount;
@@ -71,7 +71,7 @@ export default function BlogLayout({ children, frontMatter }, posts) {
             "likeCount": likeCount + 1
         }
 
-        const res = await fetch('http://localhost:3000/api/mongodb/update', {
+        const res = await fetch('http://localhost:3000/api/mongodb/likePost', {
             method: 'post',
             body: JSON.stringify(_obj)
         })
