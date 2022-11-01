@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 import { useColorMode, Heading, Text, Flex, Box, Link } from '@chakra-ui/react'
 import { parseISO, format } from 'date-fns'
 
-const BlogPost = ({ title, publishedAt, author , summary, slug }) => {
+const BlogPost = ({ title, publishedAt, author , summary, slug }) => { // satır 25 title yerine slug koydum ona bak
     const { colorMode } = useColorMode()
     const secondaryTextColor = {
         light: 'gray.700',

@@ -22,7 +22,7 @@ import { motion } from 'framer-motion';
 
 import { SearchIcon } from '@chakra-ui/icons'
 
-export default function Blog({ posts }) {
+export default function Blog({ posts, topFivePosts }) {
 
     const { colorMode } = useColorMode()
 
@@ -226,25 +226,24 @@ export default function Blog({ posts }) {
                                 width="100%"
                                 mt={8}
                             >
-                                {filteredBlogPosts.map((post) => {
+                                {topFivePosts.map((post) => {
                                     return (
                                         <NextLink href={`blog/${post.slug}`} passHref>
                                             <motion.div
                                             key={post.slug}
+                                            style={{
+                                                marginBottom: '8px',
+                                                fontWeight: 500,
+                                                cursor: 'pointer',
+                                                color: popularContentsTxtColor[colorMode]
+                                            }}
                                         whileHover={{
+                                            // color: 'red', // Yazının kendi rengini etkiliyor bu şekilde
                                             scale: 1.1,
-                                            x:20,
-                                            color: '#6257FF'
-
-                                        }}
-                                        style={{
-                                            marginBottom: '8px',
-                                            fontWeight: 500,
-                                            cursor: 'pointer',
-                                            color: popularContentsTxtColor[colorMode]
+                                            x:20
                                         }}
                                         >
-                                            &rarr; {post.title}
+                                            &rarr; {post.title} - {post.likeCount} {/* yanına like count da yazılabilir */}
                                         </motion.div>
                                         </NextLink>
                                     )
@@ -261,6 +260,16 @@ export default function Blog({ posts }) {
 
 export async function getStaticProps() {
     const posts = await getAllFilesFrontMatter('blog')
-
-    return { props: { posts } }
+    const res = await fetch("http://localhost:3000/api/mongodb/topFivePosts")
+    const json = await res.json()
+    return { props: { 
+        posts: posts,
+        topFivePosts: json
+     } }
 }
+
+// Blog.getInitialProps = async ({ req }) => {
+//     const res = await fetch("http://localhost:3000/api/mongodb/topFivePosts")
+//     const json = await res.json()
+//     return { topFivePosts: json }
+//   }

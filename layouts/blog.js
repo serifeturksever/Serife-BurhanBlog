@@ -65,7 +65,6 @@ export default function BlogLayout({ children, frontMatter }, posts) {
         setLiked(true);
         setTimeout(()=>{ setLiked(false) },4000)
         setLikeCount(likeCount + 1);
-        console.log("likeCount: ", likeCount)
         let _obj = { // likeCount artması arkadan geldiği için obje içinde tekrar arttırıyorum
             "slug": frontMatter.slug,
             "likeCount": likeCount + 1
@@ -128,7 +127,7 @@ export default function BlogLayout({ children, frontMatter }, posts) {
                     </Heading>
                     <Heading position={"fixed"} right={10} top={"50%"} letterSpacing="tight" mb={2} as="h3" size="xl">
                         {isLoading ? (<p><Spinner /></p>) :
-                            <p><Button mr={4} onClick={likePost}>
+                            <p><Button disabled = {isLiked} mr={4} onClick={likePost}>
                                 <FontAwesomeIcon
                                     icon={faHeart}
                                     style={{color: faColor[colorMode] }}
